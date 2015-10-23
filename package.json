@@ -1,6 +1,6 @@
 {
   "name": "nty-reader",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Reads a New York Times article from nytimes.com",
   "main": "index.js",
   "scripts": {
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/iamchairs/bbc-reader.git"
+    "url": "git+https://github.com/iamchairs/nyt-reader.git"
   },
   "author": "Micah Williamson",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/iamchairs/bbc-reader/issues"
+    "url": "https://github.com/iamchairs/nyt-reader/issues"
   },
-  "homepage": "https://github.com/iamchairs/bbc-reader#readme",
+  "homepage": "https://github.com/iamchairs/nyt-reader#readme",
   "dependencies": {
     "q": "^1.4.1",
     "request": "^2.65.0",
