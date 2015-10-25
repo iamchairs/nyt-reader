@@ -61,6 +61,16 @@ module.exports = (function() {
                dom = self.DOMParser.parseFromString(body, 'text/html');
             } catch(e) {}
 
+            if(!dom) {
+               if(cb) {
+                  cb(null);
+               }
+
+               defer.resolve(null);
+
+               return false;
+            }
+
             var divs = dom.getElementsByTagName('div');
 
             var ps = dom.getElementsByTagName('p');
