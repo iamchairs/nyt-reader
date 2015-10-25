@@ -114,6 +114,16 @@ module.exports = (function() {
                break;
             }
 
+            if(!datetime) {
+               if(cb) {
+                  cb(null);
+               }
+
+               defer.resolve(null);
+
+               return false;
+            }
+
             Article.datetime = new Date(datetime).toISOString().replace('T', ' ').replace('Z', '') + ' GMT+0000';
 
             if(cb) {
