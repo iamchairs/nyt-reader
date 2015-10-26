@@ -80,7 +80,7 @@ module.exports = (function() {
             for(var i = 0; i < ps.length; i++) {
                var p = ps[i];
 
-               if(p.getAttribute('class') === 'story-body-text') {
+               if(p.getAttribute('class').indexOf('story-body-text') !== -1) {
                   var raw = self.XMLSerializer.serializeToString(p);
 
                   bodyCleanStrings.push(sanitizehtml(raw, {
@@ -104,6 +104,40 @@ module.exports = (function() {
                allowedTags: self.cleanTags,
                allowedAttributes: self.cleanAttributes
             });
+
+            var figures = dom.getElementsByTagName('figure');
+            var imgs = [];
+
+            for(var i = 0; i < figures.length; i++) {
+               var figure = figures[i];
+               if(figure.getAttribute('class').indexOf('media photo') !== -1) {
+                  var figImgs = figure.getElementsByTagName('img');
+                  for(var k = 0; k < figImgs.length; k++) {
+                     imgs.push(figImgs[k]);
+                  }
+               }
+            }
+
+            for(var i = 0; i < imgs.length; i++) {
+               var img = imgs[i];
+               var srcFull = img.getAttribute('src');
+               var caption = img.getAttribute('alt');
+               if(srcFull) {
+                  var found = false;
+                  for(var k = 0; k < Article.images.length; k++) {
+                     if(Article.images[k].full === srcFull) {
+                        found = true;
+                     }
+                  }
+
+                  if(!found) {
+                     Article.images.push({
+                        full: srcFull,
+                        caption: caption
+                     });
+                  }
+               }
+            }
 
             var times = dom.getElementsByTagName('time');
             var datetime;
