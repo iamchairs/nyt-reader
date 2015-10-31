@@ -5,6 +5,7 @@ module.exports = (function() {
    var xmldom = new require('xmldom');
    var q = require('q');
    var sanitizehtml = require('sanitize-html');
+   var toMarkdown = require('./markdown');
 
    return NYTReader;
 
@@ -72,8 +73,9 @@ module.exports = (function() {
             }
 
             var divs = dom.getElementsByTagName('div');
+            var body = dom.getElementById('story-body');
 
-            var ps = dom.getElementsByTagName('p');
+            var ps = body.getElementsByTagName('p');
 
             var bodyCleanStrings = [];
             var bodyMinimalStrings = [];
@@ -95,8 +97,10 @@ module.exports = (function() {
                }
             }
 
+            var markdown = toMarkdown(body);
+
             Article.body.clean = bodyCleanStrings.join('\n\n');
-            Article.body.minimal = bodyMinimalStrings.join('');
+            Article.body.markdown = markdown;
 
             var h1 = dom.getElementsByTagName('h1');
             var h1Raw = self.XMLSerializer.serializeToString(h1[0]);

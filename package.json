@@ -1,6 +1,6 @@
 {
   "name": "nyt-reader",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Reads a New York Times article from nytimes.com",
   "main": "index.js",
   "scripts": {
