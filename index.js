@@ -75,6 +75,16 @@ module.exports = (function() {
             var divs = dom.getElementsByTagName('div');
             var body = dom.getElementById('story-body');
 
+            if(!body) {
+               if(cb) {
+                  cb(null);
+               }
+
+               defer.resolve(null);
+
+               return false;
+            }
+
             var ps = body.getElementsByTagName('p');
 
             var bodyCleanStrings = [];
