@@ -39,10 +39,7 @@ module.exports = (function() {
             jar: true
          }, function(error, response, body) {
             if(error) {
-               defer.reject(error);
-               if(cb) {
-                  cb(error);
-               }
+               return err(error);
             }
 
             var Article = {
@@ -63,26 +60,14 @@ module.exports = (function() {
             } catch(e) {}
 
             if(!dom) {
-               if(cb) {
-                  cb(null);
-               }
-
-               defer.resolve(null);
-
-               return false;
+               return err('wasnt able to read dom');
             }
 
             var divs = dom.getElementsByTagName('div');
             var body = dom.getElementById('story-body');
 
-            if(!body) {
-               if(cb) {
-                  cb(null);
-               }
-
-               defer.resolve(null);
-
-               return false;
+            if(!body || !body.getElementsByTagName) {
+               return err('wasnt able to find dom body');
             }
 
             var ps = body.getElementsByTagName('p');
@@ -161,15 +146,9 @@ module.exports = (function() {
                datetime = time.getAttribute('datetime');
                break;
             }
-
+            
             if(!datetime) {
-               if(cb) {
-                  cb(null);
-               }
-
-               defer.resolve(null);
-
-               return false;
+               return err('unable to find datetime');
             }
 
             Article.datetime = new Date(datetime).toISOString().replace('T', ' ').replace('Z', '') + ' GMT+0000';
@@ -182,6 +161,18 @@ module.exports = (function() {
          }).setMaxListeners(0);
 
          return defer.promise;
+
+         function err(str) {
+            console.error('Error from url: ' + url);
+            console.error(str);
+            defer.resolve(null);
+
+            if(cb) {
+               cb(null);
+            }
+
+            return false;
+         }
       }
    }
 })();
