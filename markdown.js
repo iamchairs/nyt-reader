@@ -104,7 +104,7 @@ module.exports = function(dom) {
 
     var content = read(dom);
 
-    return '[' + content + '](' + href + ')';
+    return '[' + trim(content) + '](' + trim(href) + ')';
   }
 
   function strong(dom) {
@@ -158,5 +158,9 @@ module.exports = function(dom) {
       allowedAttributes: {}
     }).replace(/^\s*/, '').replace(/\s*$/, '');
 
+  }
+
+  function trim(str) {
+    return str.replace(/^\s*/, '').replace(/\s*$/, '');
   }
 }
